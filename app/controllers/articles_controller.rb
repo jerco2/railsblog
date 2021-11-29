@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-    before_action :set_article, only: [:edit, :update, :destroy]
+    before_action :set_article, only: [:edit, :show, :update, :destroy]
 
     def index
         @articles = Article.all 
@@ -7,6 +7,11 @@ class ArticlesController < ApplicationController
     
     def new
         @article = Article.new
+    end
+
+    def show
+        @comments = @article.comments.where.not(id: nil)
+        @comment = @article.comments.build
     end
 
     def create
