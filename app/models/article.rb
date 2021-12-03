@@ -8,6 +8,7 @@
 # updated_at
 
 class Article < ApplicationRecord
+    validates :author, uniqueness: {scope: 'author', message: 'should be unique'}
     validates :title, :author, :content, presence: true
 
     has_many :comments
