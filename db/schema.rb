@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_25_114806) do
+ActiveRecord::Schema.define(version: 2021_12_10_092735) do
 
   create_table "articles", force: :cascade do |t|
     t.string "title"
@@ -22,6 +22,26 @@ ActiveRecord::Schema.define(version: 2021_11_25_114806) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "articles_categories", id: false, force: :cascade do |t|
+    t.integer "article_id", null: false
+    t.integer "category_id", null: false
+    t.index ["article_id", "category_id"], name: "index_articles_categories_on_article_id_and_category_id"
+    t.index ["category_id", "article_id"], name: "index_articles_categories_on_category_id_and_article_id"
+  end
+
+  create_table "articles_tags", id: false, force: :cascade do |t|
+    t.integer "article_id", null: false
+    t.integer "tag_id", null: false
+    t.index ["article_id", "tag_id"], name: "index_articles_tags_on_article_id_and_tag_id"
+    t.index ["tag_id", "article_id"], name: "index_articles_tags_on_tag_id_and_article_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "comments", force: :cascade do |t|
     t.text "content"
     t.boolean "toxic", default: false
@@ -29,6 +49,12 @@ ActiveRecord::Schema.define(version: 2021_11_25_114806) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["article_id"], name: "index_comments_on_article_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
 end

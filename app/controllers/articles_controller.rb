@@ -10,8 +10,8 @@ class ArticlesController < ApplicationController
     end
 
     def show
-        @comments = @article.comments.where.not(id: nil)
-        @comment = @article.comments.build
+            @comments = @article.comments.where.not(id: nil)
+            @comment = @article.comments.build
     end
 
     def create
@@ -44,7 +44,11 @@ class ArticlesController < ApplicationController
     private
     
     def set_article
-        @article = Article.find(params[:id])
+        begin
+            @article = Article.find(params[:id])
+        rescue ActiveRecord::RecordNotFound
+            redirect_to new_article_path
+        end
     end
     
     def article_params
